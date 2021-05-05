@@ -1,17 +1,21 @@
 package home.production.msscbeerservice.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import home.production.msscbeerservice.services.BeerService;
 import home.production.msscbeerservice.web.model.BeerDto;
 import home.production.msscbeerservice.web.model.BeerStyleEnum;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -24,8 +28,13 @@ class BeerControllerTest {
   @Autowired
   ObjectMapper objectMapper;
 
+  @MockBean
+  BeerService beerService;
+
   @Test
   void getBeerById() throws Exception {
+
+    given(beerService.getById(any())).willReturn(getValidBeerDto());
 
     mockMvc.perform(get("/api/v1/beer/" + UUID.randomUUID()).accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk());
@@ -36,6 +45,8 @@ class BeerControllerTest {
     BeerDto beerDto = getValidBeerDto();
     String beerDtoJson = objectMapper.writeValueAsString(beerDto);
 
+    given(beerService.saveNewBeer(any())).willReturn(getValidBeerDto());
+
     mockMvc.perform(post("/api/v1/beer/")
         .contentType(MediaType.APPLICATION_JSON)
         .content(beerDtoJson))
@@ -44,20 +55,14 @@ class BeerControllerTest {
 
   @Test
   void updateBeerId() throws Exception {
+    given(beerService.updateBeer(any(), any())).willReturn(getValidBeerDto());
+
     BeerDto beerDto = getValidBeerDto();
     String beerBtoJson = objectMapper.writeValueAsString(beerDto);
 
     mockMvc.perform(put("/api/v1/beer/" + UUID.randomUUID())
         .contentType(MediaType.APPLICATION_JSON)
         .content(beerBtoJson))
-        .andExpect(status().isNoContent());
-  }
-
-  @Test
-  void deleteBeerById() throws Exception {
-
-    mockMvc.perform(delete("/api/v1/beer/" + UUID.randomUUID())
-        .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isNoContent());
   }
 
