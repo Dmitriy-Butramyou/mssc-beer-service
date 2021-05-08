@@ -42,7 +42,7 @@ public class BeerServiceImpl implements BeerService {
   @Cacheable(cacheNames = "beerUpcCache")
   @Override
   public BeerDto getByUpc(String upc) {
-      return beerMapper.beerToBeerDto(beerRepositories.findByUpc(upc).orElseThrow(NotFoundException::new));
+    return beerMapper.beerToBeerDto(beerRepositories.findByUpc(upc).orElseThrow(NotFoundException::new));
   }
 
   @Override
@@ -69,7 +69,7 @@ public class BeerServiceImpl implements BeerService {
     BeerPagedList beerPagedList;
     Page<Beer> beerPage;
 
-    if(!StringUtils.isEmpty(beerName) && !StringUtils.isEmpty(beerStyle)) {
+    if (!StringUtils.isEmpty(beerName) && !StringUtils.isEmpty(beerStyle)) {
       //search both
       beerPage = beerRepositories.findAllByBeerNameAndBeerStyle(beerName, beerStyle, pageRequest);
     } else if (!StringUtils.isEmpty(beerName) && StringUtils.isEmpty(beerStyle)) {
