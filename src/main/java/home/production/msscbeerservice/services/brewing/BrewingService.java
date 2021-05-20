@@ -1,4 +1,4 @@
-package home.production.msscbeerservice.services;
+package home.production.msscbeerservice.services.brewing;
 
 import home.production.msscbeerservice.config.JmsConfig;
 import home.production.msscbeerservice.domain.Beer;
