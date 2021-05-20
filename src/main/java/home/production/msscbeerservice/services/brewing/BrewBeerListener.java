@@ -2,8 +2,8 @@ package home.production.msscbeerservice.services.brewing;
 
 import home.production.msscbeerservice.config.JmsConfig;
 import home.production.msscbeerservice.domain.Beer;
-import home.production.msscbeerservice.events.BrewBeerEvent;
-import home.production.msscbeerservice.events.NewInventoryEvent;
+import home.sfg.common.events.BrewBeerEvent;
+import home.sfg.common.events.NewInventoryEvent;
 import home.production.msscbeerservice.repositories.BeerRepositories;
 import home.production.msscbeerservice.web.model.BeerDto;
 import lombok.RequiredArgsConstructor;
