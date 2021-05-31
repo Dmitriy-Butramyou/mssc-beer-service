@@ -2,7 +2,7 @@ package home.production.msscbeerservice.services.brewing;
 
 import home.production.msscbeerservice.config.JmsConfig;
 import home.production.msscbeerservice.domain.Beer;
-import home.sfg.common.events.BrewBeerEvent;
+import home.sfg.brewery.model.events.BrewBeerEvent;
 import home.production.msscbeerservice.repositories.BeerRepositories;
 import home.production.msscbeerservice.services.inventory.BeerInventoryService;
 import home.production.msscbeerservice.web.mappers.BeerMapper;

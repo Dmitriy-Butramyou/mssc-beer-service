@@ -1,4 +1,4 @@
-package home.production.msscbeerservice.web.model;
+package home.sfg.brewery.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

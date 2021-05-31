@@ -1,7 +1,7 @@
 package home.production.msscbeerservice.web.mappers;
 
 import home.production.msscbeerservice.domain.Beer;
-import home.production.msscbeerservice.web.model.BeerDto;
+import home.sfg.brewery.model.BeerDto;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 

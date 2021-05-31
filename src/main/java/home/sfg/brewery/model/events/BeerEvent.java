@@ -1,6 +1,6 @@
-package home.sfg.common.events;
+package home.sfg.brewery.model.events;
 
-import home.production.msscbeerservice.web.model.BeerDto;
+import home.sfg.brewery.model.BeerDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
