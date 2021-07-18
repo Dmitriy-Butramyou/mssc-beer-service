@@ -2,7 +2,7 @@ package home.production.msscbeerservice.services.order;
 
 import home.production.msscbeerservice.config.JmsConfig;
 import home.sfg.brewery.model.events.ValidateOrderResult;
-import home.sfg.brewery.model.events.ValidationOrderRequest;
+import home.sfg.brewery.model.events.ValidateOrderRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
@@ -16,13 +16,13 @@ public class BeerOrderValidationListener {
   private final JmsTemplate jmsTemplate;
 
   @JmsListener(destination = JmsConfig.VALIDATE_ORDER_QUEUE)
-  public void listen(ValidationOrderRequest validationOrderRequest) {
-    Boolean isValid = validator.validateOrder(validationOrderRequest.getBeerOrder());
+  public void listen(ValidateOrderRequest validateOrderRequest) {
+    Boolean isValid = validator.validateOrder(validateOrderRequest.getBeerOrder());
 
     jmsTemplate.convertAndSend(JmsConfig.VALIDATE_ORDER_RESPONSE_QUEUE,
         ValidateOrderResult.builder()
             .isValid(isValid)
-            .orderId(validationOrderRequest.getBeerOrder().getId())
+            .orderId(validateOrderRequest.getBeerOrder().getId())
             .build());
   }
 }

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ValidationOrderRequest {
+public class ValidateOrderRequest {
 
   private BeerOrderDto beerOrder;
 }
