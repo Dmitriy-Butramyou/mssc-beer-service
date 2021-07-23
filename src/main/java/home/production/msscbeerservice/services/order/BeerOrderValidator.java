@@ -1,7 +1,7 @@
 package home.production.msscbeerservice.services.order;
 
-import home.production.msscbeerservice.repositories.BeerRepositories;
-import home.sfg.brewery.model.BeerOrderDto;
+import home.production.msscbeerservice.repositories.BeerRepository;
+import home.sfg.brewery.model.events.BeerOrderDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -13,14 +13,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Component
 public class BeerOrderValidator {
 
-  private final BeerRepositories beerRepositories;
+  private final BeerRepository beerRepository;
 
   public Boolean validateOrder(BeerOrderDto beerOrder) {
 
     AtomicInteger beersNotFound = new AtomicInteger();
 
-    beerOrder.getBeerOrderLines().forEach(orderLine -> {
-      if(beerRepositories.findByUpc(orderLine.getUpc()).isEmpty()) {
+    beerOrder.getBeerOrderLines().forEach(orderline -> {
+      if (beerRepository.findByUpc(orderline.getUpc()) == null) {
         beersNotFound.incrementAndGet();
       }
     });

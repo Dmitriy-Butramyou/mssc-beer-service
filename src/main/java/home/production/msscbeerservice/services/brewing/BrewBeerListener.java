@@ -2,24 +2,23 @@ package home.production.msscbeerservice.services.brewing;
 
 import home.production.msscbeerservice.config.JmsConfig;
 import home.production.msscbeerservice.domain.Beer;
+import home.production.msscbeerservice.repositories.BeerRepository;
+import home.sfg.brewery.model.BeerDto;
 import home.sfg.brewery.model.events.BrewBeerEvent;
 import home.sfg.brewery.model.events.NewInventoryEvent;
-import home.production.msscbeerservice.repositories.BeerRepositories;
-import home.sfg.brewery.model.BeerDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class BrewBeerListener {
 
-  private final BeerRepositories beerRepositories;
+  private final BeerRepository beerRepository;
   private final JmsTemplate jmsTemplate;
 
   @Transactional
@@ -27,13 +26,13 @@ public class BrewBeerListener {
   public void listen(BrewBeerEvent event) {
     BeerDto beerDto = event.getBeerDto();
 
-    Beer beer = beerRepositories.getOne(beerDto.getId());
+    Beer beer = beerRepository.getOne(beerDto.getId());
 
     beerDto.setQuantityOnHand(beer.getQuantityToBrew());
 
     NewInventoryEvent newInventoryEvent = new NewInventoryEvent(beerDto);
 
-    log.debug("Brewed beer " + beer.getMinOnHand() + " : QOH " + beerDto.getQuantityOnHand());
+    log.debug("Brewed beer " + beer.getMinOnHand() + " : QOH: " + beerDto.getQuantityOnHand());
 
     jmsTemplate.convertAndSend(JmsConfig.NEW_INVENTORY_QUEUE, newInventoryEvent);
   }

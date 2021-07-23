@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+
 @Slf4j
 @RequiredArgsConstructor
 @Profile("local-discovery")
@@ -20,17 +21,17 @@ public class BeerInventoryServiceFeign implements BeerInventoryService {
 
     @Override
     public Integer getOnHandInventory(UUID beerId) {
-        log.debug("Calling Inventory Service - Beer Id: " + beerId);
+        log.debug("Calling Inventory Service - BeerId: " + beerId);
 
         ResponseEntity<List<BeerInventoryDto>> responseEntity = inventoryServiceFeignClient.getOnHandInventory(beerId);
 
-        //sum from inventory list
         Integer onHand = Objects.requireNonNull(responseEntity.getBody())
                 .stream()
                 .mapToInt(BeerInventoryDto::getQuantityOnHand)
                 .sum();
 
         log.debug("BeerId: " + beerId + " On hand is: " + onHand);
+
         return onHand;
     }
 }

@@ -10,11 +10,11 @@ import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
 public class BeerEvent implements Serializable {
 
-  static final long serialVersionUID = -4844104841230020484L;
+  static final long serialVersionUID = -5781515597148163111L;
 
   private BeerDto beerDto;
 }
