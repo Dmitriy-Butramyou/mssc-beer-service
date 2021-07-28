@@ -6,8 +6,12 @@
 	<parent>
 		<groupId>com.github.sfg-beer-works</groupId>
 		<artifactId>sfg-brewery-bom</artifactId>
-		<version>1.0.17</version>
+		<version>1.0.21</version>
 	</parent>
+
+    <properties>
+        <docker.image.prefix>butramyou</docker.image.prefix>
+    </properties>
 
 	<groupId>home.production</groupId>
 	<artifactId>mssc-beer-service</artifactId>
